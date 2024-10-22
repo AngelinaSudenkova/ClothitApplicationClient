@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ClothitApplication</string>
+    <string name="bottombar_wardrobe">Wardrobe</string>
+    <string name="bottombar_friends">Friends</string>
+    <string name="bottombar_profile">Profile</string>
+    <string name="bottombar_messages">Messages</string>
+</resources>
