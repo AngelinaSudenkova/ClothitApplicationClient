@@ -1,10 +1,11 @@
-package com.example.clothitapplication.screens.splashScreen
+package com.example.clothitapplication.presenter.screens.splashScreen
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -20,8 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.example.clothitapplication.R
 import com.example.clothitapplication.navigation.Graph
+import com.example.clothitapplication.presenter.components.SplashBackgroundBlur
 import kotlinx.coroutines.delay
 
 @Composable
@@ -29,8 +33,12 @@ fun SplashScreen(navController: NavController) {
     val scale = remember {
         Animatable(0f)
     }
-
-    Surface(color = MaterialTheme.colorScheme.background) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ) {
+        SplashBackgroundBlur()
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -46,15 +54,18 @@ fun SplashScreen(navController: NavController) {
                         })
                 )
                 delay(2000L)
-                navController.navigate(Graph.HOME){
-                    popUpTo(Graph.ROOT){
+                navController.navigate(Graph.HOME) {
+                    popUpTo(Graph.ROOT) {
                         inclusive = true
                     }
                 }
             }
-            Text(text = "Splash Screen")
-            Icon(Icons.Filled.Image, contentDescription = "Image",
-                modifier = Modifier.scale(scale.value).background(Color(0xFF00FF00)))
+            Icon(
+                painterResource(id = R.drawable.clothit_logo),
+                contentDescription = "Clothit Logo",
+                modifier = Modifier.scale(scale.value),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }

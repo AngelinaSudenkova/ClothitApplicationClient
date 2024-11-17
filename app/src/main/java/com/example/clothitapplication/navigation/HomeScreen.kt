@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.clothitapplication.components.BottomNavigationBarCustom
+import com.example.clothitapplication.presenter.components.BottomNavigationBarCustom
 import dev.chrisbanes.haze.HazeState
 
 @Composable

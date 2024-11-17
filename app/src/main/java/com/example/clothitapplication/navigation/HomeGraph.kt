@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.clothitapplication.screens.friendsScreen.FriendsScreen
-import com.example.clothitapplication.screens.messageScreen.MessageScreen
-import com.example.clothitapplication.screens.profileScreen.ProfileScreen
-import com.example.clothitapplication.screens.wardrobeScreen.WardrobeScreen
+import com.example.clothitapplication.presenter.screens.friendsScreen.FriendsScreen
+import com.example.clothitapplication.presenter.screens.messageScreen.MessageScreen
+import com.example.clothitapplication.presenter.screens.profileScreen.ProfileScreen
+import com.example.clothitapplication.presenter.screens.wardrobeScreen.WardrobeScreen
 
 
 @Composable

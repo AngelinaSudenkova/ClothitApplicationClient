@@ -1,4 +1,4 @@
-package com.example.clothitapplication.components
+package com.example.clothitapplication.presenter.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checkroom
@@ -7,10 +7,10 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.clothitapplication.components.BottomBarTab.Friends
-import com.example.clothitapplication.components.BottomBarTab.Messages
-import com.example.clothitapplication.components.BottomBarTab.Profile
-import com.example.clothitapplication.components.BottomBarTab.Wardrobe
+import com.example.clothitapplication.presenter.components.BottomBarTab.Friends
+import com.example.clothitapplication.presenter.components.BottomBarTab.Messages
+import com.example.clothitapplication.presenter.components.BottomBarTab.Profile
+import com.example.clothitapplication.presenter.components.BottomBarTab.Wardrobe
 import com.example.clothitapplication.navigation.BottomNavigationScreens
 
 

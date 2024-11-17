@@ -1,4 +1,4 @@
-package com.example.clothitapplication.screens.wardrobeScreen
+package com.example.clothitapplication.presenter.screens.wardrobeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

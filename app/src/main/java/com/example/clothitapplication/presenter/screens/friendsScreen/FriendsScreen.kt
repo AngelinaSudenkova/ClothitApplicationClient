@@ -1,4 +1,4 @@
-package com.example.clothitapplication.screens.messageScreen
+package com.example.clothitapplication.presenter.screens.friendsScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
+
+
 @Composable
-fun MessageScreen(navController: NavHostController) {
+fun FriendsScreen(navController: NavHostController) {
 
     Surface(
         modifier = Modifier.padding(),
@@ -24,7 +26,7 @@ fun MessageScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Message Screen")
+            Text(text = "Friends Screen")
         }
     }
 }
