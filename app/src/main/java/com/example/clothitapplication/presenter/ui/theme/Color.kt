@@ -6,7 +6,9 @@ import androidx.compose.ui.graphics.Color
 val grayBackground = Color(0xFF171717)
 val graySurface = Color(0xFF2C2A2A)
 
+
 val onGraySurface = Color(0xFF79747E)
+val onInputField = Color(0xFF49454F)
 
 val purpleAccent = Color(0xFF930BFD)
 val yellowAccent = Color(0xFFFFBD47)

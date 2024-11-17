@@ -14,21 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.clothitapplication.presenter.ui.theme.LocalCustomColorScheme
 
-//Getting the position of the blur
-//val screenWidth = constraints.maxWidth.toFloat()
-//val screenHeight = constraints.maxHeight.toFloat()
-//
-//// Position in the middle
-//val middleX = screenWidth / 2f
-//val middleY = screenHeight / 2f
-//
-//// Position at the bottom-center
-//val bottomCenterX = screenWidth / 2f
-//val bottomCenterY = screenHeight
-//
-//// Position at the bottom-right
-//val bottomRightX = screenWidth
-//val bottomRightY = screenHeight
 
 @Preview
 @Composable
@@ -63,4 +48,17 @@ fun SplashBackgroundBlur(
     GradientBlur(color = colorCenterLeft, offsetX = 0f, offsetY = screenHeight)
     GradientBlur(color = colorTopRight, offsetX = 3 * screenWidth, offsetY = 0f)
     GradientBlur(color = colorBottomRight, offsetX = 2 * screenWidth, offsetY = 3 * screenHeight)
+}
+
+@Preview
+@Composable
+fun AuthBackgroundBlur(
+    colorCenterLeft : Color = LocalCustomColorScheme.current.pinkAccent,
+    colorTopRight: Color = LocalCustomColorScheme.current.purpleAccent
+){
+    val screenWidth = Size.width().toFloat()
+    val screenHeight = Size.height().toFloat()
+
+    GradientBlur(color = colorCenterLeft, offsetX = 0f, offsetY = screenHeight)
+    GradientBlur(color = colorTopRight, offsetX = 3 * screenWidth, offsetY = 0f)
 }

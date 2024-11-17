@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.clothitapplication.R
 import com.example.clothitapplication.navigation.Graph
+import com.example.clothitapplication.navigation.NoAuthorizedClothitScreens
 import com.example.clothitapplication.presenter.components.SplashBackgroundBlur
 import kotlinx.coroutines.delay
 
@@ -54,7 +55,7 @@ fun SplashScreen(navController: NavController) {
                         })
                 )
                 delay(2000L)
-                navController.navigate(Graph.HOME) {
+                navController.navigate(NoAuthorizedClothitScreens.LoginScreen.name) {
                     popUpTo(Graph.ROOT) {
                         inclusive = true
                     }

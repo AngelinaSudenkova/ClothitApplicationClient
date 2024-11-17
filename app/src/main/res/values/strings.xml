@@ -4,4 +4,10 @@
     <string name="bottombar_friends">Friends</string>
     <string name="bottombar_profile">Profile</string>
     <string name="bottombar_messages">Messages</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="login_logo">login logo</string>
+    <string name="submit">Submit</string>
 </resources>

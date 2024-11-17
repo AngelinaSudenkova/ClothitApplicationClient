@@ -21,7 +21,8 @@ private val DarkCustomColorScheme = CustomColorScheme(
     pinkAccent = pinkAccent,
     yellowAccent = yellowAccent,
     blueAccent = blueAccent,
-    purpleAccent = purpleAccent
+    purpleAccent = purpleAccent,
+    onInputField = onInputField,
 )
 
 private val LightCustomColorScheme = CustomColorScheme(
@@ -34,7 +35,8 @@ private val LightCustomColorScheme = CustomColorScheme(
     pinkAccent = pinkAccent,
     yellowAccent = yellowAccent,
     blueAccent = blueAccent,
-    purpleAccent = purpleAccent
+    purpleAccent = purpleAccent,
+    onInputField = onInputField
 )
 
 @Composable
@@ -74,5 +76,6 @@ data class CustomColorScheme(
     val pinkAccent: Color,
     val yellowAccent: Color,
     val blueAccent: Color,
-    val purpleAccent: Color
+    val purpleAccent: Color,
+    val onInputField: Color
 )
