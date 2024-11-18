@@ -2,6 +2,7 @@ package com.example.clothitapplication.presenter.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -61,6 +63,7 @@ fun LoginForm(
     emailState: MutableState<String> = mutableStateOf(""),
     onEmailChange: (String) -> Unit = {},
     passwordState: MutableState<String> = mutableStateOf(""),
+    passwordVisibility: MutableState<Boolean> = mutableStateOf(true),
     onPasswordChange: (String) -> Unit = {},
     onButtonClicked: () -> Unit = {},
     hazeState: HazeState = HazeState()
@@ -100,13 +103,17 @@ fun LoginForm(
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 EmailInput(emailState = emailState, onEmailChange = onEmailChange)
-                PasswordInput(passwordState = passwordState, onPasswordChange = onPasswordChange)
+                PasswordInput(
+                    passwordState = passwordState, onPasswordChange = onPasswordChange,
+                    passwordVisibility = passwordVisibility
+                )
                 SubmitButton {
                     onButtonClicked()
                 }
@@ -131,6 +138,37 @@ fun SubmitButton(onButtonClicked: () -> Unit) {
         )
     }
 }
+
+@Preview
+@Composable
+fun TextSign(
+    modifier: Modifier = Modifier,
+    text: String = "Haven't registered yet?",
+    clickingText: String = "Sign up",
+    onClick: () -> Unit = {}
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = text,
+            color = Color.White,
+            fontSize = 16.sp
+        )
+        Text(
+            text = clickingText,
+            modifier = modifier.clickable(
+                onClick = onClick
+            ),
+            color = Color.White,
+            fontSize = 16.sp,
+            style = TextStyle(textDecoration = TextDecoration.Underline)
+        )
+    }
+}
+
 
 @Preview
 @Composable
