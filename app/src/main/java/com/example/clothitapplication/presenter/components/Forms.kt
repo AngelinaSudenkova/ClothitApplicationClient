@@ -51,8 +51,85 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.HazeMaterials
 
+@Preview
 @Composable
-fun RegisterForm() {
+fun RegisterForm(
+    modifier: Modifier = Modifier,
+    emailState: MutableState<String> = mutableStateOf(""),
+    onEmailChange: (String) -> Unit = {},
+    userName: MutableState<String> = mutableStateOf(""),
+    onUsernameChange: (String) -> Unit = {},
+    passwordState: MutableState<String> = mutableStateOf(""),
+    passwordVisibility: MutableState<Boolean> = mutableStateOf(true),
+    onPasswordChange: (String) -> Unit = {},
+    repeatedPasswordState: MutableState<String> = mutableStateOf(""),
+    onRepeatedPasswordChange: (String) -> Unit = {},
+    repeatedPasswordVisibility: MutableState<Boolean> = mutableStateOf(true),
+    onButtonClicked: () -> Unit = {},
+    hazeState: HazeState = HazeState()
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.register_ic),
+            contentDescription = stringResource(R.string.register_logo),
+            tint = Color.White
+        )
+        Box(
+            modifier = Modifier
+                .height(445.dp)
+                .padding(16.dp)
+                .clip(RoundedCornerShape(32.dp))
+                .background(Color.Transparent)
+                .hazeChild(state = hazeState, style = HazeMaterials.thin())
+                .border(
+                    width = Dp.Hairline,
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = .8f),
+                            Color.White.copy(alpha = .2f),
+                        )
+                    ),
+                    shape = RoundedCornerShape(
+                        topStart = 16.dp,
+                        topEnd = 16.dp,
+                        bottomStart = 16.dp,
+                        bottomEnd = 16.dp
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                EmailInput(emailState = emailState, onEmailChange = onEmailChange)
+                EmailInput(
+                    emailState = userName, onEmailChange = onUsernameChange, label = stringResource(
+                        R.string.username
+                    )
+                )
+                PasswordInput(
+                    passwordState = passwordState, onPasswordChange = onPasswordChange,
+                    passwordVisibility = passwordVisibility
+                )
+                PasswordInput(
+                    passwordState = repeatedPasswordState,
+                    onPasswordChange = onRepeatedPasswordChange,
+                    passwordVisibility = repeatedPasswordVisibility
+                )
+                SubmitButton {
+                    onButtonClicked()
+                }
+            }
+        }
+    }
 
 }
 

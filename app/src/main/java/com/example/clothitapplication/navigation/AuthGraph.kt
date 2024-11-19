@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.clothitapplication.presenter.screens.authScreens.loginScreen.LoginScreen
+import com.example.clothitapplication.presenter.screens.authScreens.registerScreen.RegisterScreen
 import com.example.clothitapplication.presenter.screens.splashScreen.SplashScreen
 
 
@@ -14,10 +15,10 @@ fun NavGraphBuilder.AuthGraph(navController: NavHostController) {
              SplashScreen(navController)
         }
         composable(NoAuthorizedClothitScreens.LoginScreen.name) {
-             LoginScreen()
+             LoginScreen(navController)
         }
         composable(NoAuthorizedClothitScreens.RegisterScreen.name) {
-            // RegisterScreen(navController)
+             RegisterScreen(navController)
         }
     }
 }

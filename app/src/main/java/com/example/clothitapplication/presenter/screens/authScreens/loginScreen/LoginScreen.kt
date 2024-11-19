@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,17 +22,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.clothitapplication.R
+import com.example.clothitapplication.navigation.Graph
+import com.example.clothitapplication.navigation.NoAuthorizedClothitScreens
 import com.example.clothitapplication.presenter.components.AuthBackgroundBlur
 import com.example.clothitapplication.presenter.components.LoginForm
 import com.example.clothitapplication.presenter.components.TextSign
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 
-@Preview
-@Composable
-fun LoginScreen() {
 
+@Composable
+fun LoginScreen(
+    navController: NavController
+) {
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
@@ -40,8 +45,7 @@ fun LoginScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Box(
             modifier = Modifier
@@ -50,19 +54,34 @@ fun LoginScreen() {
         ) {
             AuthBackgroundBlur()
         }
-        Column(
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
             LoginForm(
                 emailState = emailState, passwordState = passwordState,
                 onEmailChange = { emailState.value = it },
                 onPasswordChange = { passwordState.value = it },
-                onButtonClicked = { /*TODO*/ },
+                onButtonClicked = {
+                    navController.navigate(Graph.HOME){
+                        popUpTo(Graph.AUTH){
+                            inclusive = true
+                        }
+                    }
+                },
                 hazeState = hazeState,
                 passwordVisibility = passwordVisibility
             )
-            Spacer(modifier = Modifier.size(64.dp))
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 64.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -73,9 +92,14 @@ fun LoginScreen() {
                     contentDescription = stringResource(R.string.clothit_logo),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-                TextSign(onClick = { /*TODO*/ })
+                TextSign(onClick = {
+                    navController.navigate(NoAuthorizedClothitScreens.RegisterScreen.name) {
+                        popUpTo(NoAuthorizedClothitScreens.LoginScreen.name) {
+                            inclusive = true
+                        }
+                    }
+                })
             }
         }
     }
-
 }

@@ -1,5 +1,11 @@
 package com.example.clothitapplication.presenter.components
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +41,46 @@ fun GradientBlur(
     )
 }
 
+
+@Composable
+fun AnimatedGradientBlur(
+    color: Color,
+    initialOffsetX: Float,
+    initialOffsetY: Float,
+) {
+
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val animatedOffsetX = infiniteTransition.animateFloat(
+        initialValue = initialOffsetX,
+        targetValue = initialOffsetX + 500f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 8000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+    val animatedOffsetY = infiniteTransition.animateFloat(
+        initialValue = initialOffsetY,
+        targetValue = initialOffsetY - 500f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 8000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+
+    val gradientBrush = Brush.radialGradient(
+        colors = listOf(color.copy(alpha = 0.5f), color.copy(alpha = 0.0f)),
+        center = Offset(animatedOffsetX.value, animatedOffsetY.value),
+        radius = 1200f
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush = gradientBrush)
+            .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+    )
+}
+
+
 @Preview
 @Composable
 fun SplashBackgroundBlur(
@@ -59,6 +105,6 @@ fun AuthBackgroundBlur(
     val screenWidth = Size.width().toFloat()
     val screenHeight = Size.height().toFloat()
 
-    GradientBlur(color = colorCenterLeft, offsetX = 0f, offsetY = screenHeight)
-    GradientBlur(color = colorTopRight, offsetX = 3 * screenWidth, offsetY = 0f)
+    AnimatedGradientBlur(color = colorCenterLeft, initialOffsetX = 0f, initialOffsetY = screenHeight)
+    AnimatedGradientBlur(color = colorTopRight, initialOffsetX = 3 * screenWidth,  initialOffsetY = 0f)
 }

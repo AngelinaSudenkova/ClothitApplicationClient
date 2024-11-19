@@ -18,32 +18,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.clothitapplication.presenter.components.WardrobeTopBar
 
 
 @Composable
 fun WardrobeScreen(navController: NavHostController) {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+
+    Surface(
+        color = MaterialTheme.colorScheme.background,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding()
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "Wardrobe Screen")
-                Icon(
-                    Icons.Filled.Image,
-                    contentDescription = "Image",
-                    modifier = Modifier
-                        .size(64.dp)
-                        .background(Color(0xFF00FF00))
-                )
-            }
+            WardrobeTopBar(
+                onItemAddClick = { /*TODO*/ },
+                onCreateOutfitClick = { /*TODO*/ }
+            )
         }
     }
+}
 
 

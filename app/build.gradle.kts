@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,6 +73,9 @@ dependencies {
 
     //navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    //navigation
+    implementation("io.coil-kt.coil3:coil-compose:3.0.3")
 }
 
 kapt {
