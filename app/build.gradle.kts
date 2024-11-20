@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.room")
 }
 
 android {
@@ -38,6 +39,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -76,6 +80,15 @@ dependencies {
 
     //navigation
     implementation("io.coil-kt.coil3:coil-compose:3.0.3")
+
+    //Room
+    implementation (libs.androidx.room.runtime)
+    kapt(libs.androidx.room.room.compiler)
+    annotationProcessor(libs.androidx.room.room.compiler)
+    implementation (libs.androidx.room.ktx)
+    //Gson
+    implementation ("com.google.code.gson:gson:2.11.0")
+
 }
 
 kapt {
