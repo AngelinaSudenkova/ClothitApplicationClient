@@ -32,7 +32,7 @@ fun HomeGraph(
         composable(route = BottomNavigationScreens.ProfileScreen.name) {
             ProfileScreen(navController, authNavController)
         }
-        // ItemGraph(navController = navController)
+        ItemGraph(navController = navController)
     }
 }
 

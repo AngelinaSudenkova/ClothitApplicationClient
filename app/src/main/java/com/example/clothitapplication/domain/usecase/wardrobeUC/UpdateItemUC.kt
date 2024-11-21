@@ -7,5 +7,5 @@ import javax.inject.Inject
 class UpdateItemUC @Inject constructor(
     private val repository: ItemRepository
 ) {
-   suspend fun invoke(itemEntity: ItemEntity) = repository.updateItem(itemEntity)
+   suspend operator fun invoke(itemEntity: ItemEntity) = repository.updateItem(itemEntity)
 }

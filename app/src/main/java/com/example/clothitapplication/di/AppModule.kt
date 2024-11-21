@@ -2,9 +2,13 @@ package com.example.clothitapplication.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.clothitapplication.data.repository.ItemRepositoryImpl
+import com.example.clothitapplication.data.repository.OutfitRepositoryImpl
 import com.example.clothitapplication.data.repository.local.ClothitDatabase
 import com.example.clothitapplication.data.repository.local.ItemDao
 import com.example.clothitapplication.data.repository.local.OutfitDao
+import com.example.clothitapplication.domain.repository.WardrobeRepository.ItemRepository
+import com.example.clothitapplication.domain.repository.WardrobeRepository.OutfitRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +48,31 @@ object DatabaseModule {
         return database.outfitDao()
     }
 }
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideItemRepository(
+        itemDao: ItemDao,
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ): ItemRepository {
+        return ItemRepositoryImpl(itemDao, dispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOutfitRepository(
+        outfitDao: OutfitDao,
+        itemDao: ItemDao,
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ): OutfitRepository {
+        return OutfitRepositoryImpl(outfitDao, itemDao, dispatcher)
+    }
+}
+
 
 @Module
 @InstallIn(SingletonComponent::class)

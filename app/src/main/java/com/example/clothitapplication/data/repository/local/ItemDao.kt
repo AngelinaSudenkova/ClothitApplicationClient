@@ -14,7 +14,7 @@ interface ItemDao {
     suspend fun getItemById(id: Int): ItemDto?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addItem(item: ItemDto)
+    suspend fun addItem(item: ItemDto) : Long
 
     @Delete
     suspend fun deleteItem(item: ItemDto)

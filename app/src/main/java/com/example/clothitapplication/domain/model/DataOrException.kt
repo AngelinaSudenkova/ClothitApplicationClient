@@ -1,7 +1,7 @@
 package com.example.clothitapplication.domain.model
 
-data class DataOrException<T, Boolean, E : Exception?>(
+data class DataOrException<T, L, E : Exception?>(
     var data: T? = null,
-    var loading: Boolean? = null,
+    var loading: L? = null,
     var e: E? = null
 )

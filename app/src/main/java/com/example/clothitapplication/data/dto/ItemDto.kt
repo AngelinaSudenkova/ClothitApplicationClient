@@ -8,7 +8,7 @@ import com.example.clothitapplication.utils.EnumConverters
 
 @Entity(tableName = "items")
 data class ItemDto(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val category: String,
     val description: String,
