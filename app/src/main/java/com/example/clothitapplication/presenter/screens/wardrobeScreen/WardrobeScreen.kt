@@ -6,24 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import com.example.clothitapplication.R
-import com.example.clothitapplication.domain.model.DataOrException
-import com.example.clothitapplication.domain.model.wardrobeModel.ItemEntity
 import com.example.clothitapplication.domain.model.wardrobeModel.WardrobeCategory
 import com.example.clothitapplication.navigation.AuthorizedClothitScreens
 import com.example.clothitapplication.navigation.Graph
@@ -76,7 +69,9 @@ fun WardrobeScreen(
                         else -> {
                             ItemCardListCard(
                                 categoryName = WardrobeCategory.ACCESSORIES.name,
-                                imageUrls = accessoriesState.data!!.map { Uri.parse(it.imgUrl) })
+                                imageUrls = accessoriesState.data!!.map { Uri.parse(it.imgUrl) },
+                                navController = navController,
+                                itemsIds = accessoriesState.data!!.map { it.id })
                         }
                     }
                 }
@@ -93,7 +88,10 @@ fun WardrobeScreen(
                         else -> {
                             ItemCardListCard(
                                 categoryName = WardrobeCategory.TOPS.name,
-                                imageUrls = topsState.data!!.map { Uri.parse(it.imgUrl) })
+                                imageUrls = topsState.data!!.map { Uri.parse(it.imgUrl) },
+                                navController = navController,
+                                itemsIds = topsState.data!!.map { it.id }
+                            )
                         }
                     }
                 }
@@ -110,7 +108,10 @@ fun WardrobeScreen(
                         else -> {
                             ItemCardListCard(
                                 categoryName = WardrobeCategory.BOTTOMS.name,
-                                imageUrls = bottomsState.data!!.map { Uri.parse(it.imgUrl) })
+                                imageUrls = bottomsState.data!!.map { Uri.parse(it.imgUrl) },
+                                navController = navController,
+                                itemsIds = bottomsState.data!!.map { it.id }
+                            )
                         }
                     }
                 }
@@ -127,7 +128,10 @@ fun WardrobeScreen(
                         else -> {
                             ItemCardListCard(
                                 categoryName = WardrobeCategory.SHOES.name,
-                                imageUrls = shoesState.data!!.map { Uri.parse(it.imgUrl) })
+                                imageUrls = shoesState.data!!.map { Uri.parse(it.imgUrl) },
+                                navController = navController,
+                                itemsIds = shoesState.data!!.map { it.id }
+                            )
                         }
                     }
                 }
@@ -137,5 +141,7 @@ fun WardrobeScreen(
     }
 
 }
+
+
 
 

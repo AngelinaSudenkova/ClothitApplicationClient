@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -40,7 +40,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
+import com.example.clothitapplication.navigation.AuthorizedClothitScreens
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -131,7 +133,9 @@ fun WardrobeTopBar(
 fun ItemCardListCard(
     categoryName: String,
     imageUrls: List<Uri?>,
-    hazeState: HazeState = HazeState()
+    hazeState: HazeState = HazeState(),
+    navController: NavHostController,
+    itemsIds: List<Int>
 ) {
     Column(
         modifier = Modifier.padding(8.dp),
@@ -146,7 +150,7 @@ fun ItemCardListCard(
             Box(modifier = Modifier.size(128.dp))
         }
         LazyRow {
-            items(imageUrls) { imageUrl ->
+            itemsIndexed(imageUrls) { index, imageUrl ->
                 Box(
                     modifier = Modifier
                         .height(128.dp)
@@ -170,7 +174,9 @@ fun ItemCardListCard(
                                 bottomEnd = 16.dp
                             )
                         )
-                        .clickable { /* TODO */ },
+                        .clickable {
+                            navController.navigate(AuthorizedClothitScreens.UpdateItemScreen.name + "/${itemsIds[index]}")
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
