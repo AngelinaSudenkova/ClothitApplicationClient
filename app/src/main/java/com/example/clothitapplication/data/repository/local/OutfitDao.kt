@@ -13,7 +13,7 @@ interface OutfitDao {
     suspend fun getOutfitById(id: Int): OutfitDto
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addOutfit(outfit: OutfitDto)
+    suspend fun addOutfit(outfit: OutfitDto) : Long
 
     @Delete
     suspend fun deleteOutfit(outfit: OutfitDto)

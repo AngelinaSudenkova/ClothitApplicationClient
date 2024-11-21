@@ -27,6 +27,7 @@ import com.example.clothitapplication.presenter.components.ImagePlaceholder
 import com.example.clothitapplication.presenter.components.ItemScreenTopBar
 import com.example.clothitapplication.domain.model.wardrobeModel.ItemEntity
 import com.example.clothitapplication.utils.EnumConverters
+import com.example.clothitapplication.utils.TimeUtilsCustom
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,7 +63,7 @@ fun ItemScreen(navController: NavController, itemViewModel: ItemViewModel = hilt
                         category = EnumConverters.fromStringToWardrobeCategory(selectedCategory),
                         description = description,
                         imgUrl = imageUri.toString(),
-                        timeCreation = getCurrentTime()
+                        timeCreation = TimeUtilsCustom.getCurrentTime()
                     )
                     itemViewModel.saveItem(context, item, it)
                     navController.navigate(Graph.HOME)
@@ -73,8 +74,3 @@ fun ItemScreen(navController: NavController, itemViewModel: ItemViewModel = hilt
 }
 
 
-fun getCurrentTime(): String {
-    val currentTimeMillis = System.currentTimeMillis()
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    return dateFormat.format(Date(currentTimeMillis))
-}

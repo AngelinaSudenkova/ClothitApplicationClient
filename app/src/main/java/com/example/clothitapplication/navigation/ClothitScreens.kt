@@ -16,5 +16,7 @@ enum class NoAuthorizedClothitScreens {
 enum class AuthorizedClothitScreens {
     ItemScreen,
     OutfitScreen,
+    CreateOutfitScreen,
     UpdateItemScreen,
+    AddItemsToOutfitScreen
 }

@@ -1,13 +1,15 @@
 package com.example.clothitapplication.domain.model.wardrobeModel
 
+import android.content.ClipDescription
 import com.example.clothitapplication.data.dto.OutfitDto
 
-data class OutfitEntity (
-    val id: Int,
+data class OutfitEntity(
+    val id: Int = 0,
     val imgUrl: String,
     val season: Season,
     val name: String,
-    val items: List<ItemEntity>,
+    val description: String,
+    val items: List<ItemEntity?>,
     val timeCreation: String,
     val timeEdition: String
 ){
@@ -22,8 +24,9 @@ data class OutfitEntity (
         return OutfitDto(
             id = id,
             name = name,
-            itemIds = items.map { it.id },
+            itemIds = items.map { it!!.id },
             season = season.name,
+            description = description,
             timeCreation = timeCreation,
             timeEdition = timeEdition
         )

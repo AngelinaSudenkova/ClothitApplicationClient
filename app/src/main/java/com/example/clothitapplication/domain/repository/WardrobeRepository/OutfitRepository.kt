@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface OutfitRepository {
     suspend fun getOutfits(): Flow<List<WardrobeShortEntity>>
     suspend fun getOutfitById(id: Int): OutfitEntity
-    suspend fun addOutfit(outfit: OutfitEntity)
+    suspend fun addOutfit(outfit: OutfitEntity) : Int
     suspend fun deleteOutfit(outfit: OutfitEntity)
     suspend fun updateOutfit(outfit: OutfitEntity)
 }

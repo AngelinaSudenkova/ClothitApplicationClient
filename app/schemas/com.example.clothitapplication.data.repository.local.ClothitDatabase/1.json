@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ab13cc2944d83026ef432eac17ce6159",
+    "identityHash": "9c27e5123863f81e0005dbefa675e4de",
     "entities": [
       {
         "tableName": "items",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "outfits",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `itemIds` TEXT NOT NULL, `season` TEXT NOT NULL, `timeCreation` TEXT NOT NULL, `timeEdition` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `itemIds` TEXT NOT NULL, `season` TEXT NOT NULL, `description` TEXT NOT NULL, `timeCreation` TEXT NOT NULL, `timeEdition` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -79,6 +79,12 @@
           {
             "fieldPath": "season",
             "columnName": "season",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -108,7 +114,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab13cc2944d83026ef432eac17ce6159')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9c27e5123863f81e0005dbefa675e4de')"
     ]
   }
 }

@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.CameraAlt
@@ -33,7 +32,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,7 +44,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -331,6 +328,86 @@ fun FilledImagePlaceholder(
                 contentDescription = "Add photo",
                 tint = MaterialTheme.colorScheme.onSurface
             )
+        }
+    }
+}
+
+@Composable
+fun SelectImagePlaceholder(
+    imageUri: Uri,
+    itemId: Int,
+    hazeState: HazeState = remember { HazeState() },
+    itemIds: List<Int>,
+    onItemSelected: (List<Int>) -> Unit
+) {
+    var isSelected by remember { mutableStateOf(itemIds.contains(itemId)) }
+
+    Box(
+        modifier = Modifier
+            .size(96.dp)
+            .padding(16.dp)
+            .clip(RoundedCornerShape(32.dp))
+            .background(if (isSelected) Color.Gray.copy(alpha = 0.2f) else Color.Transparent)
+            .hazeChild(state = hazeState, style = HazeMaterials.thin())
+            .border(
+                width = Dp.Hairline,
+                brush = Brush.verticalGradient(
+                    colors = if (isSelected) {
+                        listOf(
+                            Color.Gray.copy(alpha = 0.8f),
+                            Color.Gray.copy(alpha = 0.4f)
+                        )
+                    } else {
+                        listOf(
+                            Color.White.copy(alpha = 0.8f),
+                            Color.White.copy(alpha = 0.2f)
+                        )
+                    }
+                ),
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable {
+                isSelected = !isSelected
+                val newItemIds = if (isSelected) {
+                    itemIds + itemId
+                } else {
+                    itemIds - itemId
+                }
+                onItemSelected(newItemIds)
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        if (imageUri != Uri.EMPTY) {
+            AsyncImage(
+                model = imageUri,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Icon(
+                modifier = Modifier.size(64.dp),
+                imageVector = Icons.Default.CameraAlt,
+                contentDescription = "Add photo",
+                tint = if (isSelected) Color.Gray else MaterialTheme.colorScheme.onSurface
+            )
+        }
+
+        if (isSelected) {
+            Box(
+                modifier = Modifier
+                    .size(24.dp)
+                    .clip(CircleShape)
+                    .background(Color.Gray.copy(alpha = 0.8f))
+                    .align(Alignment.TopEnd),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Selected",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
         }
     }
 }

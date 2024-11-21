@@ -38,10 +38,12 @@ class OutfitRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun addOutfit(outfit: OutfitEntity) {
+    override suspend fun addOutfit(outfit: OutfitEntity) : Int {
+        var id = 0
         withContext(dispatcher) {
-            outfitDao.addOutfit(outfit.toOutfitDto())
+           id = outfitDao.addOutfit(outfit.toOutfitDto()).toInt()
         }
+        return id
     }
 
     override suspend fun deleteOutfit(outfit: OutfitEntity) {

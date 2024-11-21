@@ -7,7 +7,6 @@ import com.example.clothitapplication.domain.model.wardrobeModel.OutfitEntity
 import com.example.clothitapplication.domain.model.wardrobeModel.WardrobeCategory
 import com.example.clothitapplication.domain.model.wardrobeModel.WardrobeShortEntity
 import com.example.clothitapplication.utils.EnumConverters
-import java.util.Locale.Category
 
 @Entity(tableName = "outfits")
 data class OutfitDto(
@@ -15,6 +14,7 @@ data class OutfitDto(
     val name: String,
     val itemIds: List<Int>,
     val season: String,
+    val description: String,
     val timeCreation: String,
     val timeEdition: String
 ){
@@ -27,6 +27,7 @@ data class OutfitDto(
             season = EnumConverters.fromStringToSeason(this.season),
             timeCreation = this.timeCreation,
             imgUrl =  this.itemIds[0].toString(),
+            description = this.description,
             timeEdition = this.timeEdition,
         )
     }

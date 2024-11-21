@@ -52,7 +52,7 @@ fun WardrobeScreen(
                         popUpTo(AuthorizedClothitScreens.ItemScreen.name)
                     }
                 },
-                onCreateOutfitClick = { /* TODO */ }
+                onCreateOutfitClick = { navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name) }
             )
 
             LazyColumn {
