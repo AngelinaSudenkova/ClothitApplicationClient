@@ -21,4 +21,8 @@
     <string name="create_outfit">Create outfit</string>
     <string name="choose_category">Choose category</string>
     <string name="item_image">item image</string>
+    <string name="summary">Summary</string>
+    <string name="name">Name: %1$s</string>
+    <string name="season">Season: %1$s</string>
+    <string name="description">Description: %1$s</string>
 </resources>

@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.clothitapplication.presenter.screens.friendsScreen.FriendsScreen
-import com.example.clothitapplication.presenter.screens.itemScreen.CreateOutfitViewModel
+import com.example.clothitapplication.presenter.screens.outfitScreen.CreateOutfitViewModel
 import com.example.clothitapplication.presenter.screens.messageScreen.MessageScreen
 import com.example.clothitapplication.presenter.screens.profileScreen.ProfileScreen
 import com.example.clothitapplication.presenter.screens.wardrobeScreen.WardrobeScreen

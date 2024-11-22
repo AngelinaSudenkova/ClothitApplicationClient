@@ -1,14 +1,12 @@
 package com.example.clothitapplication.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.clothitapplication.presenter.screens.itemScreen.AddItemsToOutfitScreen
-import com.example.clothitapplication.presenter.screens.itemScreen.CreateOutfitScreen
-import com.example.clothitapplication.presenter.screens.itemScreen.CreateOutfitViewModel
+import com.example.clothitapplication.presenter.screens.outfitScreen.AddItemsToOutfitScreen
+import com.example.clothitapplication.presenter.screens.outfitScreen.CreateOutfitScreen
+import com.example.clothitapplication.presenter.screens.outfitScreen.CreateOutfitViewModel
 import com.example.clothitapplication.presenter.screens.itemScreen.ItemScreen
 import com.example.clothitapplication.presenter.screens.itemScreen.UpdateItemScreen
 

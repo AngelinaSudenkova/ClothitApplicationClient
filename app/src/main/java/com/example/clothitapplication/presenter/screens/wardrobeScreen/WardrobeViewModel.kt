@@ -4,10 +4,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.clothitapplication.domain.model.DataOrException
 import com.example.clothitapplication.domain.model.wardrobeModel.WardrobeShortEntity
 import com.example.clothitapplication.domain.usecase.wardrobeUC.GetAccessoriesUC
 import com.example.clothitapplication.domain.usecase.wardrobeUC.GetBottomsUC
+import com.example.clothitapplication.domain.usecase.wardrobeUC.GetOutfitsUC
 import com.example.clothitapplication.domain.usecase.wardrobeUC.GetShoesUC
 import com.example.clothitapplication.domain.usecase.wardrobeUC.GetTopsUC
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +19,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WardrobeViewModel @Inject constructor(
+    private val getOutfitsUC: GetOutfitsUC,
     private val getAccessoriesUC: GetAccessoriesUC,
     private val getTopsUC: GetTopsUC,
     private val getBottomsUC: GetBottomsUC,
     private val getShoesUC: GetShoesUC
 ) : ViewModel() {
+
+
+    private val _outfitState: MutableState<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(emptyList(), false, null))
+    val outfitsState: MutableState<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>> =
+        _outfitState
 
 
     private val _accessoriesState: MutableState<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>> =
@@ -30,7 +39,7 @@ class WardrobeViewModel @Inject constructor(
         _accessoriesState
 
     private val _topsState: MutableState<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>> =
-        mutableStateOf(DataOrException(emptyList(),false, null))
+        mutableStateOf(DataOrException(emptyList(), false, null))
     val topsState: MutableState<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>> =
         _topsState
 
@@ -49,10 +58,19 @@ class WardrobeViewModel @Inject constructor(
     }
 
     private fun getAllWardrobeItems() {
+        getOutfits()
         getAccessories()
         getTops()
         getBottoms()
         getShoes()
+    }
+
+    private fun getOutfits() {
+        viewModelScope.launch {
+            getOutfitsUC().collect { dataOrException ->
+                _outfitState.value = dataOrException
+            }
+        }
     }
 
     fun getAccessories() = viewModelScope.launch {

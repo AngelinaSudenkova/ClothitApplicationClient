@@ -28,6 +28,7 @@ fun WardrobeScreen(
     navController: NavHostController,
     viewModel: WardrobeViewModel = hiltViewModel<WardrobeViewModel>()
 ) {
+    val outfitsState by viewModel.outfitsState
     val accessoriesState by viewModel.accessoriesState
     val topsState by viewModel.topsState
     val bottomsState by viewModel.bottomsState
@@ -56,6 +57,23 @@ fun WardrobeScreen(
             )
 
             LazyColumn {
+                item {
+                    when {
+                        accessoriesState.loading == true -> {
+                            LinearProgressIndicator()
+                        }
+                        accessoriesState.e != null -> {
+                            Text(text = "Failed to load outfits: ${outfitsState.e!!.message}")
+                        }
+                        else -> {
+                            ItemCardListCard(
+                                categoryName = WardrobeCategory.OUTFITS.name,
+                                imageUrls = outfitsState.data!!.map { Uri.parse(it.imgUrl) },
+                                navController = navController,
+                                itemsIds = outfitsState.data!!.map { it.id })
+                        }
+                    }
+                }
                 item {
                     when {
                         accessoriesState.loading == true -> {

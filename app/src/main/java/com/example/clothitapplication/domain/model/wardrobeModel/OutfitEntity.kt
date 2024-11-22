@@ -28,7 +28,8 @@ data class OutfitEntity(
             season = season.name,
             description = description,
             timeCreation = timeCreation,
-            timeEdition = timeEdition
+            timeEdition = timeEdition,
+            imgUrl = imgUrl
         )
     }
 }

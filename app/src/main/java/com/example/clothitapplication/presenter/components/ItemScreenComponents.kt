@@ -344,7 +344,7 @@ fun SelectImagePlaceholder(
 
     Box(
         modifier = Modifier
-            .size(96.dp)
+            .size(128.dp)
             .padding(16.dp)
             .clip(RoundedCornerShape(32.dp))
             .background(if (isSelected) Color.Gray.copy(alpha = 0.2f) else Color.Transparent)

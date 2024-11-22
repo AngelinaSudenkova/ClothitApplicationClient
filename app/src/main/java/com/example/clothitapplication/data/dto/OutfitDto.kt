@@ -10,7 +10,8 @@ import com.example.clothitapplication.utils.EnumConverters
 
 @Entity(tableName = "outfits")
 data class OutfitDto(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val imgUrl : String,
     val name: String,
     val itemIds: List<Int>,
     val season: String,
@@ -26,7 +27,7 @@ data class OutfitDto(
             items = itemEntities,
             season = EnumConverters.fromStringToSeason(this.season),
             timeCreation = this.timeCreation,
-            imgUrl =  this.itemIds[0].toString(),
+            imgUrl =  this.imgUrl,
             description = this.description,
             timeEdition = this.timeEdition,
         )
@@ -36,7 +37,7 @@ fun toWardrobeShortEntity(): WardrobeShortEntity {
     return WardrobeShortEntity(
         id = this.id,
         category =  WardrobeCategory.OUTFITS,
-        imgUrl = this.itemIds[0].toString()
+        imgUrl = this.imgUrl
     )
 }
 }
