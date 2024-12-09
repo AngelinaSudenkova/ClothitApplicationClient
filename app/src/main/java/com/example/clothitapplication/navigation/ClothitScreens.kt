@@ -18,5 +18,6 @@ enum class AuthorizedClothitScreens {
     OutfitScreen,
     CreateOutfitScreen,
     UpdateItemScreen,
-    AddItemsToOutfitScreen
+    AddItemsToOutfitScreen,
+    UpdateOutfitScreen
 }

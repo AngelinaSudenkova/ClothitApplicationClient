@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,12 +34,30 @@ import com.example.clothitapplication.utils.EnumConverters
 @Composable
 fun CreateOutfitScreen(
     navController: NavController,
-    outfitViewModel: CreateOutfitViewModel
+    outfitViewModel: CreateOutfitViewModel,
+    outfitId: Int? = null
 ) {
     val outfitName = remember { mutableStateOf("") }
     val outfitSeason = remember { mutableStateOf("") }
     val selectedItems = outfitViewModel.selectedItemsEntity
     val outfitDescription = remember { mutableStateOf("") }
+
+    val outfitEntity = outfitViewModel.loadedOutfit.value
+
+    LaunchedEffect(Unit) {
+        if(outfitId != null) {
+            outfitViewModel.loadOutfit(outfitId)
+        }
+    }
+
+    LaunchedEffect(outfitEntity) {
+        if (outfitId != null && outfitEntity != null) {
+                outfitName.value = outfitEntity.name
+                outfitSeason.value = outfitEntity.season.toString()
+                outfitDescription.value = outfitEntity.description
+
+            }
+        }
 
     val steps = listOf("Add Items", "Details", "Summary")
     var currentStep by remember { mutableIntStateOf(0) }
@@ -49,7 +68,8 @@ fun CreateOutfitScreen(
             navController = navController,
             selectedItemsEntity = selectedItems,
             onItemClicked = { outfitViewModel.removeItemId(it) },
-            onNext = { currentStep++ })
+            onNext = { currentStep++ },
+            outfitViewModel = outfitViewModel)
 
         1 -> OutfitDetailsStep(onNext = { currentStep++ },
             onBack = { currentStep-- },
@@ -66,14 +86,22 @@ fun CreateOutfitScreen(
             description = outfitDescription.value,
             items = selectedItems.value,
             onBack = { currentStep-- },
-            onDone = {
+            onDone = { if(outfitId == null) {
                 outfitViewModel.createOutfit(
                     outfitName = outfitName.value,
                     outfitSeason = outfitSeason.value,
                     outfitDescription = outfitDescription.value
+                )} else {
+                outfitViewModel.updateOutfit(
+                    outfitId = outfitId,
+                    outfitName = outfitName.value,
+                    outfitSeason = outfitSeason.value,
+                    outfitDescription = outfitDescription.value
                 )
+            }
                 navController.navigate(Graph.HOME) {
                     popUpTo(0)
+                    outfitViewModel.resetOutfit()
                 }
             })
     }
@@ -85,7 +113,8 @@ fun AddItemsStep(
     navController: NavController,
     onNext: () -> Unit,
     onItemClicked: (Int) -> Unit = {},
-    selectedItemsEntity: MutableState<List<WardrobeShortEntity>>
+    selectedItemsEntity: MutableState<List<WardrobeShortEntity>>,
+    outfitViewModel: CreateOutfitViewModel
 ) {
     Column(
         modifier = Modifier
@@ -95,6 +124,7 @@ fun AddItemsStep(
         CreateOutfitScreenHeader {
             navController.navigate(Graph.HOME) {
                 popUpTo(0)
+                outfitViewModel.resetOutfit()
             }
         }
         Column(
@@ -192,7 +222,13 @@ fun SummaryStep(
     items: List<WardrobeShortEntity>,
     onDone: () -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
         SummaryForm(
             name = name,
             season = season,
@@ -203,5 +239,7 @@ fun SummaryStep(
             onButtonClick = onDone
         )
     }
+
+
 
 }

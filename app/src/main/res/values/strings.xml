@@ -25,4 +25,8 @@
     <string name="name">Name: %1$s</string>
     <string name="season">Season: %1$s</string>
     <string name="description">Description: %1$s</string>
+    <string name="outfit">Outfit</string>
+    <string name="photoes">Photos:</string>
+    <string name="send_button">Send button</string>
+    <string name="delete_button">Delete button</string>
 </resources>

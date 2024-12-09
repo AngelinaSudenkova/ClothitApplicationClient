@@ -26,14 +26,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -49,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import coil3.compose.AsyncImage
+import com.example.clothitapplication.domain.model.wardrobeModel.ItemEntity
 import com.example.clothitapplication.domain.model.wardrobeModel.Season
 import com.example.clothitapplication.domain.model.wardrobeModel.WardrobeCategory
 import dev.chrisbanes.haze.HazeState
@@ -258,7 +262,7 @@ fun OutfitScreenTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 32.dp, vertical = 32.dp)
+            .padding(top = 32.dp, start = 32.dp, end = 32.dp)
             .background(MaterialTheme.colorScheme.background),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top
@@ -288,14 +292,18 @@ fun OutfitCreationForm(
     onCategorySelected: (String) -> Unit = {},
     oldCategory: String = "",
     oldDescription: String = "",
-    onDescriptionChange: (String) -> Unit = {}
+    onDescriptionChange: (String) -> Unit = {},
+    isUpdateScreen: Boolean = false
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+//            .fillMaxSize()
             .padding(16.dp)
     ) {
-        NameField(name = name, onNameChange = onNameChange)
+        if (!isUpdateScreen) {
+            NameField(name = name, onNameChange = onNameChange)
+        }
         Spacer(modifier = Modifier.height(16.dp))
         CategoryDropDownMenu(
             categories = seasons,
@@ -398,8 +406,11 @@ fun SummaryForm(
 ) {
     Column(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(R.string.summary),
@@ -473,3 +484,160 @@ fun SummaryForm(
         )
     }
 }
+
+@Composable
+fun OutfitItemsRow(
+    itemList: List<ItemEntity?>,
+    hazeState: HazeState = remember { HazeState() }
+) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.photoes),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        LazyRow(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(itemList) { item ->
+                Box(
+                    modifier = Modifier
+                        .size(256.dp)
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.Transparent)
+                        .hazeChild(state = hazeState, style = HazeMaterials.thin())
+                        .border(
+                            width = Dp.Hairline,
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = .8f),
+                                    Color.White.copy(alpha = .2f),
+                                )
+                            ),
+                            shape = RoundedCornerShape(
+                                topStart = 16.dp,
+                                topEnd = 16.dp,
+                                bottomStart = 16.dp,
+                                bottomEnd = 16.dp
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (item!!.imgUrl.isNotEmpty()) {
+                        AsyncImage(
+                            model = Uri.parse(item.imgUrl),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Icon(
+                            modifier = Modifier.size(24.dp),
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add photo",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun EditButton(title: String = "Edit",
+               onButtonClick: () -> Unit = {}) {
+    Box(
+        modifier = Modifier
+            .height(48.dp)
+            .width(164.dp)
+            .clip(CircleShape)
+            .background(Color.Transparent)
+            .border(
+                width = 2.dp,
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color.White.copy(alpha = .8f),
+                        Color.White.copy(alpha = .2f),
+                    )
+                ),
+                shape = CircleShape
+            )
+            .clickable { onButtonClick() }
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun SendButton(onButtonClick: () -> Unit = {}){
+    Box(
+        modifier = Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(Color.Transparent)
+            .border(
+                width = 2.dp,
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color.White.copy(alpha = .8f),
+                        Color.White.copy(alpha = .2f),
+                    )
+                ),
+                shape = CircleShape
+            )
+            .clickable { onButtonClick() }
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.Send,
+            contentDescription = stringResource(R.string.send_button),
+            tint = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.align(Alignment.Center)
+        )
+        }
+    }
+
+@Composable
+fun DeleteButton(
+    onButtonClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(Color.Transparent)
+            .border(
+                width = 2.dp,
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color.White.copy(alpha = .8f),
+                        Color.White.copy(alpha = .2f),
+                    )
+                ),
+                shape = CircleShape
+            )
+            .clickable { onButtonClick() }
+    ) {
+        Icon(
+            imageVector = Icons.Default.Clear,
+            contentDescription = stringResource(R.string.delete_button),
+            tint = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+

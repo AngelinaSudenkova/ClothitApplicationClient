@@ -59,9 +59,10 @@ class OutfitRepositoryImpl @Inject constructor(
         return id
     }
 
-    override suspend fun deleteOutfit(outfit: OutfitEntity) {
+    override suspend fun deleteOutfit(outfitId: Int) {
         withContext(dispatcher) {
-            outfitDao.deleteOutfit(outfit.toOutfitDto())
+            val outfitDto = outfitDao.getOutfitById(outfitId)
+            outfitDao.deleteOutfit(outfitDto)
         }
     }
 

@@ -39,6 +39,8 @@ fun AddItemsToOutfitScreen(
     val itemsIds = outfitViewModel.selectedItems.value
     var selectedIds by remember { mutableStateOf(itemsIds) }
 
+    val loadedOutfit = outfitViewModel.loadedOutfit.value
+
     val items = when (itemCategory) {
         "TOPS" -> wardrobeViewModel.topsState.value.data
         "BOTTOMS" -> wardrobeViewModel.bottomsState.value.data
@@ -55,7 +57,13 @@ fun AddItemsToOutfitScreen(
             outfitViewModel.addItemsIds(selectedIds)
         },
         navController = navController
-    )
+    ){
+        if(loadedOutfit != null){
+            navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name + "?/${loadedOutfit.id}")
+        } else {
+            navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name)
+        }
+    }
 }
 
 
@@ -64,7 +72,8 @@ fun AddItemsToOutfitScreenContent(
     items: List<WardrobeShortEntity>,
     navController: NavController,
     itemsIds: List<Int>,
-    onItemSelected: (List<Int>) -> Unit = {}
+    onItemSelected: (List<Int>) -> Unit = {},
+    onButtonClick: () -> Unit
 ) {
 
     var itemIds by remember { mutableStateOf(itemsIds) }
@@ -98,7 +107,7 @@ fun AddItemsToOutfitScreenContent(
         SelectButton(
             onButtonClick = {
                 onItemSelected(itemIds)
-                navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name)
+                onButtonClick()
             },
         )
     }

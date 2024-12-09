@@ -134,7 +134,8 @@ fun ItemCardListCard(
     imageUrls: List<Uri?>,
     hazeState: HazeState = HazeState(),
     navController: NavHostController,
-    itemsIds: List<Int>
+    itemsIds: List<Int>,
+    isOutfit: Boolean = false
 ) {
     Column(
         modifier = Modifier.padding(8.dp),
@@ -145,7 +146,7 @@ fun ItemCardListCard(
             text = categoryName,
             style = MaterialTheme.typography.bodySmall
         )
-        if(imageUrls.isEmpty()) {
+        if (imageUrls.isEmpty()) {
             Box(modifier = Modifier.size(128.dp))
         }
         LazyRow {
@@ -174,7 +175,11 @@ fun ItemCardListCard(
                             )
                         )
                         .clickable {
-                            navController.navigate(AuthorizedClothitScreens.UpdateItemScreen.name + "/${itemsIds[index]}")
+                            if (!isOutfit) {
+                                navController.navigate(AuthorizedClothitScreens.UpdateItemScreen.name + "/${itemsIds[index]}")
+                            } else {
+                                navController.navigate(AuthorizedClothitScreens.UpdateOutfitScreen.name + "/${itemsIds[index]}")
+                            }
                         },
                     contentAlignment = Alignment.Center
                 ) {

@@ -9,6 +9,7 @@ import com.example.clothitapplication.presenter.screens.outfitScreen.CreateOutfi
 import com.example.clothitapplication.presenter.screens.outfitScreen.CreateOutfitViewModel
 import com.example.clothitapplication.presenter.screens.itemScreen.ItemScreen
 import com.example.clothitapplication.presenter.screens.itemScreen.UpdateItemScreen
+import com.example.clothitapplication.presenter.screens.outfitScreen.UpdateOutfitScreen
 
 
 fun NavGraphBuilder.ItemGraph(
@@ -25,8 +26,10 @@ fun NavGraphBuilder.ItemGraph(
             UpdateItemScreen(navController = navController, itemId = itemId)
         }
 
-        composable(route = AuthorizedClothitScreens.CreateOutfitScreen.name) {
-            CreateOutfitScreen(navController = navController, outfitViewModel = outfitViewModel)
+        composable(route = "${AuthorizedClothitScreens.CreateOutfitScreen.name}?/{outfitId}") { backStackEntry ->
+            val outfitId = backStackEntry.arguments?.getString("outfitId")?.toInt()
+            CreateOutfitScreen(navController = navController, outfitViewModel = outfitViewModel,
+                outfitId = outfitId)
         }
 
         composable(route = "${AuthorizedClothitScreens.AddItemsToOutfitScreen.name}/{itemCategory}") { backStackEntry ->
@@ -36,6 +39,10 @@ fun NavGraphBuilder.ItemGraph(
                 navController = navController,
                 outfitViewModel = outfitViewModel
             )
+        }
+        composable(route = "${AuthorizedClothitScreens.UpdateOutfitScreen.name}/{outfitId}") { backStackEntry ->
+            val outfitId = backStackEntry.arguments?.getString("outfitId")?.toInt() ?: 0
+            UpdateOutfitScreen(navController = navController, outfitId = outfitId)
         }
     }
 }

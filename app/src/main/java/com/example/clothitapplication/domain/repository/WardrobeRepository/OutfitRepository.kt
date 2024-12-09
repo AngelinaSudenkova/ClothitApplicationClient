@@ -9,6 +9,6 @@ interface OutfitRepository {
     suspend fun getOutfits(): Flow<DataOrException<List<WardrobeShortEntity>, Boolean, Exception>>
     suspend fun getOutfitById(id: Int): OutfitEntity
     suspend fun addOutfit(outfit: OutfitEntity) : Int
-    suspend fun deleteOutfit(outfit: OutfitEntity)
+    suspend fun deleteOutfit(outfitId: Int)
     suspend fun updateOutfit(outfit: OutfitEntity)
 }

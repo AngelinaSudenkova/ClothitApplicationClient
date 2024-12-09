@@ -53,7 +53,7 @@ fun WardrobeScreen(
                         popUpTo(AuthorizedClothitScreens.ItemScreen.name)
                     }
                 },
-                onCreateOutfitClick = { navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name) }
+                onCreateOutfitClick = { navController.navigate(AuthorizedClothitScreens.CreateOutfitScreen.name +"") }
             )
 
             LazyColumn {
@@ -70,7 +70,8 @@ fun WardrobeScreen(
                                 categoryName = WardrobeCategory.OUTFITS.name,
                                 imageUrls = outfitsState.data!!.map { Uri.parse(it.imgUrl) },
                                 navController = navController,
-                                itemsIds = outfitsState.data!!.map { it.id })
+                                itemsIds = outfitsState.data!!.map { it.id },
+                                isOutfit = true)
                         }
                     }
                 }
