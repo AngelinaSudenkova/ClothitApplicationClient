@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.clothitapplication.navigation.Graph
 
@@ -18,7 +19,8 @@ import com.example.clothitapplication.navigation.Graph
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
-    authNavController: NavHostController
+    authNavController: NavHostController,
+    viewModel : ProfileViewModel = hiltViewModel()
 ) {
 
     Surface(
@@ -32,6 +34,7 @@ fun ProfileScreen(
         ) {
             Text(text = "Profile Screen")
             Button(onClick = {
+                viewModel.logout()
                 authNavController.navigate(Graph.ROOT) {
                     popUpTo(Graph.ROOT) {
                         inclusive = true

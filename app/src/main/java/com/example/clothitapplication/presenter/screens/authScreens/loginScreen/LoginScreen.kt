@@ -7,23 +7,28 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.clothitapplication.R
+import com.example.clothitapplication.domain.model.ResultUi
 import com.example.clothitapplication.navigation.Graph
 import com.example.clothitapplication.navigation.NoAuthorizedClothitScreens
 import com.example.clothitapplication.presenter.components.AuthBackgroundBlur
@@ -35,12 +40,15 @@ import dev.chrisbanes.haze.haze
 
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val hazeState = remember { HazeState() }
+
+    val loginState = viewModel.loginState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -59,20 +67,45 @@ fun LoginScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            LoginForm(
-                emailState = emailState, passwordState = passwordState,
-                onEmailChange = { emailState.value = it },
-                onPasswordChange = { passwordState.value = it },
-                onButtonClicked = {
-                    navController.navigate(Graph.HOME){
-                        popUpTo(Graph.AUTH){
-                            inclusive = true
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                LoginForm(
+                    emailState = emailState, passwordState = passwordState,
+                    onEmailChange = { emailState.value = it },
+                    onPasswordChange = { passwordState.value = it },
+                    onButtonClicked = {
+                        viewModel.login(emailState.value, passwordState.value)
+                    },
+                    hazeState = hazeState,
+                    passwordVisibility = passwordVisibility
+                )
+                when (loginState.value) {
+                    is ResultUi.Failure -> {
+                        if ((loginState.value as ResultUi.Failure).exception.message?.isNotEmpty() == true) {
+                            Text(
+                                "Login failed: ${(loginState.value as ResultUi.Failure).exception.message}",
+                                modifier = Modifier.padding(8.dp),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.error
+                            )
                         }
                     }
-                },
-                hazeState = hazeState,
-                passwordVisibility = passwordVisibility
-            )
+
+                    is ResultUi.Success -> {
+                        navController.navigate(Graph.HOME) {
+                            popUpTo(Graph.AUTH) {
+                                inclusive = true
+                            }
+                        }
+                    }
+
+                    is ResultUi.Loading -> {
+                        LinearProgressIndicator(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
+                }
+            }
         }
 
         Column(
